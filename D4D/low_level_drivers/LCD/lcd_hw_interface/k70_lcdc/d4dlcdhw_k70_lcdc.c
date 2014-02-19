@@ -708,8 +708,13 @@ static unsigned char D4DLCDHW_Init_K70LCDC(void)
   {  
     LWord* pSource;
     LWord* pDest;
-    LWord cnt = lastUpdateEnd;
-     cnt -= lastUpdateStart;
+    LWord cnt;
+    LWord int_back = LCDC_LIER;   
+    
+    LCDC_LIER = 0;
+    
+    cnt = lastUpdateEnd;
+    cnt -= lastUpdateStart;
     
     pSource = (LWord*)lastUpdateStart;
     if(second2first)
@@ -717,6 +722,7 @@ static unsigned char D4DLCDHW_Init_K70LCDC(void)
     else
       pDest = (LWord*)(fb_start_addr_2nd + (lastUpdateStart - d4dlcdhw_k70_lcdc_desc.fb_start_addr));
     
+    LCDC_LIER = int_back;
       
     #if D4DLCDHWFB_DMA_ENABLE      
       DMA_SADDR(D4DLCDHWFB_DMA_CHANNEL) = (LWord)pSource;
