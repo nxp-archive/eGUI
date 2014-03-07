@@ -166,6 +166,7 @@ static void D4D_BtnOnDraw(D4D_MESSAGE* pMsg)
     D4D_COLOR clrT, clrB;
     const D4D_BMP* pBmp = pBtn->pBmpNormal;
     D4D_BOOL pressed = *(pBtn->pStatus) & D4D_BUTTON_STATUS_PRESSED_MASK;
+    D4D_BOOL swap_bitmap = pressed;
 
 //-------- 3D Buttons Enabled --------
     D4D_BMP_PROPERTIES bmpProp;
@@ -184,7 +185,11 @@ static void D4D_BtnOnDraw(D4D_MESSAGE* pMsg)
       clrB = D4D_ObjectGetBckgColor(pThis, draw);
     }
 
-    if((draw & D4D_OBJECT_DRAWFLAGS_FOCUSED) && (pBtn->pBmpFocus))
+    /* not all buttons may get focus */
+    if (pThis->pData->flags & D4D_OBJECT_F_TABSTOP)
+      swap_bitmap = (draw & D4D_OBJECT_DRAWFLAGS_FOCUSED);
+
+    if(swap_bitmap && (pBtn->pBmpFocus))
       pBmp = pBtn->pBmpFocus;
 
     if(pThis->initFlags & D4D_BTN_F_3D)
@@ -219,11 +224,11 @@ static void D4D_BtnOnDraw(D4D_MESSAGE* pMsg)
             pThis->pData->flags &= ~D4D_OBJECT_F_BEVEL_MASK;
             pThis->pData->flags |= D4D_OBJECT_F_BEVEL_RAISED;
           }
-		}
+        }
 
         D4D_DrawFrame(pThis, clrT, clrB);
 
-        if(pThis->pData->flags & D4D_OBJECT_F_BEVEL_MASK) 
+        if(pThis->pData->flags & D4D_OBJECT_F_BEVEL_MASK)
 		{
           if((pThis->pData->flags & D4D_OBJECT_F_BEVEL_MASK) == D4D_OBJECT_F_BEVEL_RAISED)
           {
