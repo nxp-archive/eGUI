@@ -245,12 +245,10 @@
             break;
         }
         break;
+    #ifdef D4DLCD_BACKLIGHT
       case D4DLCD_BACKLIGHT_PIN:
         switch(setState)
         {
-
-          #ifdef D4DLCD_BACKLIGHT
-
           case D4DHW_PIN_OUT:
             OUTPUT(D4DLCD_BACKLIGHT);
             break;
@@ -263,11 +261,9 @@
           case D4DHW_PIN_SET_0:
             D4DLCD_ASSERT_BACKLIGHT;
             break;
-
-         #endif
-
         }
         break;
+     #endif
     }
 
     return 0;
