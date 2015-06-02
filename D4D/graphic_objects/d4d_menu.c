@@ -564,7 +564,7 @@ static D4D_BOOL D4D_MenuScrollBarSetup(D4D_OBJECT* pObject)
     pScrlBr->position.x = (D4D_COOR)(_calc.contentGeom.pnt.x + _calc.contentGeom.sz.cx  - D4D_MENU_SCRLBR_WIDTH);
     pScrlBr->position.y = (D4D_COOR)(_calc.contentGeom.pnt.y + _calc.titleBar_y + 1);
 
-    pScrlBr->position = D4D_GetScreenToClientPoint( pObject, &pScrlBr->position);
+    pScrlBr->position = D4D_GetScreenToClientPoint( pScrlBr, &pScrlBr->position);
 
     pScrlBr->size.cx = D4D_MENU_SCRLBR_WIDTH;
     pScrlBr->size.cy = (D4D_COOR)(_calc.contentGeom.sz.cy - _calc.titleBar_y - 1);
