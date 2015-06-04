@@ -599,9 +599,7 @@ void D4D_MenuScrollBarsFeedBack(D4D_OBJECT* pThis, D4D_INDEX old_position, D4D_I
   D4D_MENU* pMenu = D4D_GET_MENU(D4D_GetParentObject(pThis));
 
   D4D_UNUSED(old_position);
-
   pMenu->pData->page_ix = (D4D_MENU_INDEX)new_position;
-  pMenu->pData->ix = (D4D_MENU_INDEX)new_position;
 
   D4D_InvalidateObject(D4D_GetParentObject(pThis), D4D_FALSE);
 }
