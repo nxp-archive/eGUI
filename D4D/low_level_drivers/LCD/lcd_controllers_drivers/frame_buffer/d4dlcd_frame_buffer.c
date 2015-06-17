@@ -231,7 +231,7 @@
 				break;
 
   		case Landscape180:
-				win_const1 = (signed long)(p_fbDesc->fb_start_addr + (p_fbDesc->lcd_x_max * win_x + p_fbDesc->lcd_x_max - win_y) * bpp_byte);
+				win_const1 = (signed long)(p_fbDesc->fb_start_addr + (p_fbDesc->lcd_x_max * win_x + p_fbDesc->lcd_x_max - win_y - 1) * bpp_byte);
 				win_const2 = (signed long)((win_width * p_fbDesc->lcd_x_max + 1) * -1 * bpp_byte);
 				win_const3 = (signed long)((p_fbDesc->lcd_x_max) * bpp_byte);
   			break;
