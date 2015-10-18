@@ -149,31 +149,44 @@ D4D_EXTIMG_TYPE D4D_GetImgSrcType(D4D_BMP* pBmp)
     if(pBmp->pData == NULL)
     {
       D4D_CHAR* pExt;
+	  D4D_CHAR* pExtSrc;	  
 
       // run the external data dekoder
       if(pBmp->pParam == NULL)
         return D4D_EXTIMG_UNKNOWN;
 
       // 1. get File extension
-      pExt = D4D_GetFileExtension((D4D_CHAR*)pBmp->pParam);
+      pExtSrc = D4D_GetFileExtension((D4D_CHAR*)pBmp->pParam);
+	  pExt = D4D_MemAlloc(D4D_StrLen(pExtSrc) + 1);
+	  D4D_StrCopy(pExt, pExtSrc);
 
       // Convert extension to upper format
       D4D_ToUpper(pExt);
 
       if(pExt == NULL)
+	  {
+		D4D_MemFree(pExt);
         return D4D_EXTIMG_UNKNOWN;
+	  }
 
       #if (D4D_BMP_EXTSRC_SUPPORT_D4D == D4D_TRUE) && (D4D_EXTSRC_FILE_ENABLE == D4D_TRUE)
         if(!D4D_CompareStrings(pExt, D4D_BMP_EXTSRC_SUPPORT_D4D_EXT))        // big or little endian of the egui picture format
+        {
+		  D4D_MemFree(pExt);
           return D4D_EXTIMG_D4D; // d4d bitmap binary files
+		}
 
       #endif
 
       #if (D4D_BMP_EXTSRC_SUPPORT_BMP == D4D_TRUE) && (D4D_EXTSRC_FILE_ENABLE == D4D_TRUE)
         if(!D4D_CompareStrings(pExt, "BMP"))
+        {
+		  D4D_MemFree(pExt);
           return D4D_EXTIMG_BMP; // standard bitmap BMP files
+		}
       #endif
 
+	  D4D_MemFree(pExt);
 
     }else
 
