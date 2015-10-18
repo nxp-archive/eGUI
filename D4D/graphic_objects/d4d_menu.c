@@ -296,7 +296,7 @@ static void D4D_MenuOnDraw(D4D_MESSAGE* pMsg)
     D4D_DrawTextRect(&tmp_point, &tmp_size, &tmp_txtbuff, clrT, clrB);
   }
 
-  for(tmpB = 0; (tmpB < _calc.posCnt) && (tmpB < _calc.itemsCnt); tmpB++)
+  for(tmpB = 0; (tmpB < _calc.posCnt) && (tmpB + pMenu->pData->page_ix < _calc.itemsCnt); tmpB++)
   {
     if(((pMenu->pData->ix - pMenu->pData->page_ix) != tmpB) || (!D4D_IsEnabled(pThis)))
     {
