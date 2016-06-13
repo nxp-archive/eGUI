@@ -248,6 +248,21 @@ void D4D_ClearKeysBuffer(void)
 }
 
 /**************************************************************************/ /*!
+* @brief   Function enable or disable handling system keys (ESC, UP/DOWN, LEFT/RIGHT) automatically
+* @param   bEnable - <D4D_TRUE - eGUI will handle system keys automatically, D4D_FALSE - the system keys will be ignored and it will be normally handled to screen and focused object
+* @return  none.
+* @note    This function enables handling the system keys.
+*******************************************************************************/
+void D4D_EnableSystemKeys(D4D_BOOL bEnable)
+{
+  if(bEnable)
+    d4d_systemFlags &= ~D4D_SYSTEM_F_SYSTEM_KEYS_DISABLE;
+  else
+    d4d_systemFlags |= D4D_SYSTEM_F_SYSTEM_KEYS_DISABLE;
+}
+
+
+/**************************************************************************/ /*!
 * @brief   Place to keys buffer new keys events by binary mask
 * @param   keys - keys mask
 * @return  none
@@ -589,7 +604,7 @@ void D4D_HandleKeys(void)
     scanCode &= ~D4D_KEY_SCANCODE_RELEASEMASK;
 
     // do we handle the keys ourselves (to navigate across the screen) ?
-    if(!d4d_pKeysCapturer)
+    if(!d4d_pKeysCapturer && !(d4d_systemFlags & D4D_SYSTEM_F_SYSTEM_KEYS_DISABLE))
     {
         if((scanCode & D4D_KEY_SCANCODE_RELEASEMASK) == 0)
         {
@@ -638,6 +653,22 @@ void D4D_HandleKeys(void)
         D4D_SendMessageBack(&d4d_msg);
       }
     }
+    else
+    {
+        // The object cannot receive the KEY_EVENT, send it at least to screen
+        // prepare the message
+        d4d_msg.pScreen = pScreen;
+        d4d_msg.pObject = NULL;
+
+        if(tmp_release == 0)
+          d4d_msg.nMsgId = D4D_MSG_KEYDOWN;   // if key was pressed down?
+        else
+          d4d_msg.nMsgId = D4D_MSG_KEYUP;     // if key was released up?
+
+        d4d_msg.prm.key = (D4D_KEY_SCANCODE)(scanCode & D4D_KEY_SCANCODE_KEYMASK);
+
+        D4D_SendMessage(&d4d_msg);
+    }
 }
 
 /**************************************************************//*!
@@ -652,7 +683,7 @@ void D4D_SendMessage(D4D_MESSAGE* pMsg)
     D4D_OBJECT* pObject = pMsg->pObject;
 
     // screen gets the first chance
-    if(pMsg->pScreen->OnObjectMsg)
+    if(pMsg->pScreen && pMsg->pScreen->OnObjectMsg)
     {
         // screen may discard the message by returning TRUE
         if(pMsg->pScreen->OnObjectMsg(pMsg))
@@ -739,7 +770,7 @@ void D4D_SendMessageBack(D4D_MESSAGE* pMsg)
 {
   D4D_OBJECT* pObject = pMsg->pObject;
 
-  if(pObject->pRelations)
+  if(pObject && pObject->pRelations)
   {
     D4D_OBJECT* pParentObj = (D4D_OBJECT*)pObject->pRelations[D4D_OBJECT_USR_DATA_PARENT_IX];
     if(pParentObj)

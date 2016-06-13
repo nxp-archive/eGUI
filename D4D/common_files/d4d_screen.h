@@ -129,12 +129,12 @@
 #define D4D_SCR_FINT_REDRAWC        (0x04)
 #define D4D_SCR_FINT_CHECKOBJECTS   (0x08)
 
-#define D4D_SCR_FINT_MOUSE_MASK     (0x30)
-#define D4D_SCR_FINT_MOUSE_SHIFT    4
+#define D4D_SCR_FINT_MOUSE_MASK     (0x60)
+#define D4D_SCR_FINT_MOUSE_SHIFT    (5)
 
-#define D4D_SCR_FINT_MOUSE_NORMAL       0x10
-#define D4D_SCR_FINT_MOUSE_BUSY         0x20
-#define D4D_SCR_FINT_MOUSE_UNAVAILABLE  0x30
+#define D4D_SCR_FINT_MOUSE_NORMAL       (0x20)
+#define D4D_SCR_FINT_MOUSE_BUSY         (0x40)
+#define D4D_SCR_FINT_MOUSE_UNAVAILABLE  (0x60)
 
 struct D4D_STRING_S;
 /******************************************************************************

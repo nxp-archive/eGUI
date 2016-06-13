@@ -127,6 +127,7 @@ void D4D_Poll(void);
 void D4D_SetOrientation(D4D_ORIENTATION orient);
 void D4D_KeysChanged(D4D_KEYS keys);
 void D4D_NewKeyEvent(D4D_KEY_SCANCODE scanCode);
+void D4D_EnableSystemKeys(D4D_BOOL bEnable);
 void D4D_TimeTickPut(void);
 void D4D_FlushOutput(void);
 
