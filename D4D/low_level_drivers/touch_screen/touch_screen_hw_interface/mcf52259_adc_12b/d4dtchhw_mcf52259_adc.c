@@ -59,7 +59,7 @@
 
   // include of low level driver heaser file
   // it will be included into wole project only in case that this driver is selected in main D4D configuration file
-  #include "low_level_drivers\touch_screen\touch_screen_hw_interface\mcf52259_adc_12b\d4dtchhw_mcf52259_adc.h"
+  #include "low_level_drivers/touch_screen/touch_screen_hw_interface/mcf52259_adc_12b/d4dtchhw_mcf52259_adc.h"
   /******************************************************************************
   * Macros
   ******************************************************************************/

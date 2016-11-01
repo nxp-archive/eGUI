@@ -53,7 +53,7 @@
 #include <mqx.h>
 #include <fio.h>
 #include <tchres.h>
-#include "low_level_drivers\touch_screen\touch_screen_drivers\resistive_mqx\d4dtch_resistive_mqx.h"
+#include "low_level_drivers/touch_screen/touch_screen_drivers/resistive_mqx/d4dtch_resistive_mqx.h"
 
 /******************************************************************************
 * Macros

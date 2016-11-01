@@ -59,7 +59,7 @@
 
   // include of low level driver heaser file
   // it will be included into wole project only in case that this driver is selected in main D4D configuration file
-  #include "low_level_drivers\LCD\lcd_hw_interface\gpio_8080_byte_8bit\d4dlcdhw_gpio8080_byte_8b.h"
+  #include "low_level_drivers/LCD/lcd_hw_interface/gpio_8080_byte_8bit/d4dlcdhw_gpio8080_byte_8b.h"
   /******************************************************************************
   * Macros
   ******************************************************************************/
