@@ -53,7 +53,7 @@
 
 #if (D4D_MK_STR(D4D_LLD_TCH_HW) == d4dtchhw_s12_adc_ID)
 
-  #include "low_level_drivers\touch_screen\touch_screen_hw_interface\s12_adc_12b\d4dtchhw_s12_adc.h"
+  #include "low_level_drivers/touch_screen/touch_screen_hw_interface/s12_adc_12b/d4dtchhw_s12_adc.h"
   /******************************************************************************
   * Macros
   ******************************************************************************/
