@@ -421,13 +421,13 @@ typedef struct D4D_SCREEN_S
 #endif
 
 D4D_SCREEN* D4D_GetActiveScreen(void);
-void D4D_ActivateScreen(D4D_SCREEN* pNewScreen, D4D_BOOL bReplaceCurrent);
+void D4D_ActivateScreen(const D4D_SCREEN* pNewScreen, D4D_BOOL bReplaceCurrent);
 void D4D_EscapeScreen(void);
 void D4D_EscapeToBaseScreen(void);
-void D4D_InitScreen(D4D_SCREEN* pScreen);
-void D4D_InvalidateScreen(D4D_SCREEN* pScreen, D4D_BOOL bComplete);
-void D4D_SetScreenTextProperties(D4D_SCREEN* pScreen, D4D_TEXT_PROPERTIES property);
-void D4D_SetScreenFontProperties(D4D_SCREEN* pScreen, D4D_FONT_PROPERTIES property);
+void D4D_InitScreen(const D4D_SCREEN* pScreen);
+void D4D_InvalidateScreen(const D4D_SCREEN* pScreen, D4D_BOOL bComplete);
+void D4D_SetScreenTextProperties(const D4D_SCREEN* pScreen, D4D_TEXT_PROPERTIES property);
+void D4D_SetScreenFontProperties(const D4D_SCREEN* pScreen, D4D_FONT_PROPERTIES property);
 
 
 D4D_POINT D4D_GetClientToScreenPoint(D4D_OBJECT* pObject, D4D_POINT* nClientPoint);

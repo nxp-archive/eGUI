@@ -49,11 +49,11 @@
 
 
 
-static D4D_COOR D4D_GetScrHeaderTitleOffset(D4D_SCREEN* pScreen);
-static D4D_BOOL D4D_GetScrHeaderExitBtnCoor(D4D_SCREEN* pScreen, D4D_POINT* resultPos, D4D_SIZE* resultSize);
-static void D4D_DrawScreenNC(D4D_SCREEN* pScreen, D4D_BOOL active);
-static D4D_OBJECT* D4D_FindObject(D4D_SCREEN* pScreen, D4D_OBJECT_PTR pObject);
-static void D4D_ChangeScreen(D4D_SCREEN* pNewScreen, D4D_SCREEN* pOldScreen);
+static D4D_COOR D4D_GetScrHeaderTitleOffset(const D4D_SCREEN* pScreen);
+static D4D_BOOL D4D_GetScrHeaderExitBtnCoor(const D4D_SCREEN* pScreen, D4D_POINT* resultPos, D4D_SIZE* resultSize);
+static void D4D_DrawScreenNC(const D4D_SCREEN* pScreen, D4D_BOOL active);
+static D4D_OBJECT* D4D_FindObject(const D4D_SCREEN* pScreen, D4D_OBJECT_PTR pObject);
+static void D4D_ChangeScreen(const D4D_SCREEN* pNewScreen, D4D_SCREEN* pOldScreen);
 
 
 D4D_MARGIN d4d_screenMarginDflt =
@@ -91,7 +91,7 @@ D4D_SCREEN* D4D_GetActiveScreen(void)
 * @return  None
 * @note    Enter new screen, remember the history if not only replacing
 *******************************************************************************/
-void D4D_ActivateScreen(D4D_SCREEN* pNewScreen, D4D_BOOL bReplaceCurrent)
+void D4D_ActivateScreen(const D4D_SCREEN* pNewScreen, D4D_BOOL bReplaceCurrent)
 {
   D4D_SCREEN* pOldScreen;
 
@@ -181,7 +181,7 @@ void D4D_EscapeToBaseScreen(void)
 * @note    Initialize the the screen. This is keep as a public API to allow user application
 *          initialize the screen before it native first use.
 *******************************************************************************/
-void D4D_InitScreen(D4D_SCREEN* pScreen)
+void D4D_InitScreen(const D4D_SCREEN* pScreen)
 {
   D4D_SCREEN_DATA* pData = pScreen->pData;
   D4D_OBJECT** pObj;
@@ -235,7 +235,7 @@ void D4D_InitScreen(D4D_SCREEN* pScreen)
 * @return  None
 * @note    Invalidate screen and its object in two ways - complete or active areas only.
 *******************************************************************************/
-void D4D_InvalidateScreen(D4D_SCREEN* pScreen, D4D_BOOL bComplete)
+void D4D_InvalidateScreen(const D4D_SCREEN* pScreen, D4D_BOOL bComplete)
 {
     if(!pScreen)
       return;
@@ -263,7 +263,7 @@ void D4D_InvalidateScreen(D4D_SCREEN* pScreen, D4D_BOOL bComplete)
 * @return  pointer of focused object in given screen
 * @note    None.
 *******************************************************************************/
-D4D_OBJECT_PTR D4D_GetFocusedObject(D4D_SCREEN* pScreen)
+D4D_OBJECT_PTR D4D_GetFocusedObject(const D4D_SCREEN* pScreen)
 {
   if(!pScreen)
     return NULL;
@@ -283,7 +283,7 @@ D4D_OBJECT_PTR D4D_GetFocusedObject(D4D_SCREEN* pScreen)
 * @return  None
 * @note    In case that there is no other usable object (visible, enable ...) the focus is not changed
 *******************************************************************************/
-void D4D_FocusNextObject(D4D_SCREEN* pScreen, D4D_BOOL bInitialSearch)
+void D4D_FocusNextObject(const D4D_SCREEN* pScreen, D4D_BOOL bInitialSearch)
 {
   D4D_SCREEN_DATA* pData = pScreen->pData;
   const D4D_OBJECT* const* pObjects = pScreen->pObjects;
@@ -353,7 +353,7 @@ void D4D_FocusNextObject(D4D_SCREEN* pScreen, D4D_BOOL bInitialSearch)
 * @return  None
 * @note    In case that there is no other usable object (visible, enable ...) the focus is not changed
 *******************************************************************************/
-void D4D_FocusPrevObject(D4D_SCREEN* pScreen)
+void D4D_FocusPrevObject(const D4D_SCREEN* pScreen)
 {
     D4D_SCREEN_DATA* pData = pScreen->pData;
     const D4D_OBJECT* const* pObjects = pScreen->pObjects;
@@ -427,7 +427,7 @@ void D4D_FocusPrevObject(D4D_SCREEN* pScreen)
 * @return  None
 * @note    In case that there is no other issue (obejct exists, visible, enable ...) the focus is changed to given one
 *******************************************************************************/
-void D4D_FocusSet(D4D_SCREEN* pScreen, D4D_OBJECT_PTR pObject)
+void D4D_FocusSet(const D4D_SCREEN* pScreen, D4D_OBJECT_PTR pObject)
 {
     D4D_SCREEN_DATA* pData = pScreen->pData;
     D4D_OBJECT* pFocusedObj = pData->focusedObject;
@@ -500,7 +500,7 @@ void D4D_FocusSet(D4D_SCREEN* pScreen, D4D_OBJECT_PTR pObject)
 * @return  None
 * @note    Sets the font property for text used natively by screen (title)
 *******************************************************************************/
-void D4D_SetScreenFontProperties(D4D_SCREEN* pScreen, D4D_FONT_PROPERTIES property)
+void D4D_SetScreenFontProperties(const D4D_SCREEN* pScreen, D4D_FONT_PROPERTIES property)
 {
   if(pScreen->textBuff.str_properties->font_properties == property)
     return;     // There is no change needed
@@ -516,7 +516,7 @@ void D4D_SetScreenFontProperties(D4D_SCREEN* pScreen, D4D_FONT_PROPERTIES proper
 * @return  None
 * @note    Sets the text property for text used natively by screen (title)
 *******************************************************************************/
-void D4D_SetScreenTextProperties(D4D_SCREEN* pScreen, D4D_TEXT_PROPERTIES property)
+void D4D_SetScreenTextProperties(const D4D_SCREEN* pScreen, D4D_TEXT_PROPERTIES property)
 {
   if(pScreen->textBuff.str_properties->text_properties == property)
     return;     // There is no change needed
@@ -673,7 +673,7 @@ D4D_OBJECT* D4D_GetLastObject(D4D_SCREEN* pScreen)
 * Find object's index
 *
 ******************************************************************/
-static D4D_OBJECT* D4D_FindObject(D4D_SCREEN* pScreen, D4D_OBJECT_PTR pObject)
+static D4D_OBJECT* D4D_FindObject(const D4D_SCREEN* pScreen, D4D_OBJECT_PTR pObject)
 {
     D4D_OBJECT* pLocObject = pScreen->pData->focusedObject;
 
@@ -699,7 +699,7 @@ static D4D_OBJECT* D4D_FindObject(D4D_SCREEN* pScreen, D4D_OBJECT_PTR pObject)
 * Change the active screen
 *
 ******************************************************************/
-static void D4D_ChangeScreen(D4D_SCREEN* pNewScreen, D4D_SCREEN* pOldScreen)
+static void D4D_ChangeScreen(const D4D_SCREEN* pNewScreen, D4D_SCREEN* pOldScreen)
 {
     D4D_SCREEN_DATA* pData;
     D4D_MESSAGE tmp_msg;
@@ -792,7 +792,7 @@ D4D_COOR D4D_GetScrHeaderSize(D4D_SCREEN* pScreen)
 * Compute offset of screen header title
 *
 ******************************************************************/
-static D4D_COOR D4D_GetScrHeaderTitleOffset(D4D_SCREEN* pScreen)
+static D4D_COOR D4D_GetScrHeaderTitleOffset(const D4D_SCREEN* pScreen)
 {
   D4D_COOR tmp_off = D4D_SCR_TITLE_OFF_X;
 
@@ -815,7 +815,7 @@ static D4D_COOR D4D_GetScrHeaderTitleOffset(D4D_SCREEN* pScreen)
 * Compute position of exit button on screen header title
 *
 ******************************************************************/
-static D4D_BOOL D4D_GetScrHeaderExitBtnCoor(D4D_SCREEN* pScreen, D4D_POINT* resultPos, D4D_SIZE* resultSize)
+static D4D_BOOL D4D_GetScrHeaderExitBtnCoor(const D4D_SCREEN* pScreen, D4D_POINT* resultPos, D4D_SIZE* resultSize)
 {
   D4D_COOR tmp_coor = D4D_GetScrHeaderSize(pScreen);
 
@@ -861,7 +861,7 @@ static D4D_BOOL D4D_GetScrHeaderExitBtnCoor(D4D_SCREEN* pScreen, D4D_POINT* resu
 * Redraw non client screen area - Header, background, title, etc.
 *
 ******************************************************************/
-static void D4D_DrawScreenNC(D4D_SCREEN* pScreen, D4D_BOOL active)
+static void D4D_DrawScreenNC(const D4D_SCREEN* pScreen, D4D_BOOL active)
 {
   D4D_CLR_SCHEME *pScheme = D4D_ScreenGetScheme(pScreen);
   D4D_COLOR clr;
