@@ -119,7 +119,7 @@ D4D_SYSTEM_FLAGS d4d_systemFlags;
 *           the HW is ready and all internal variables are also prepared to run eGUI.
 *          Must be run as a First function of eGUI in project.
 *******************************************************************************/
-D4D_BOOL D4D_Init(D4D_SCREEN* pInitScreen)
+D4D_BOOL D4D_Init(const D4D_SCREEN* pInitScreen)
 {
   if(!D4D_LCD_Init()) // Init hardware of LCD
     return D4D_FALSE;

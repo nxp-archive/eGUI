@@ -122,7 +122,7 @@
 ******************************************************************/
 
 /* General driver API */
-D4D_BOOL D4D_Init(D4D_SCREEN* pInitScreen);
+D4D_BOOL D4D_Init(const D4D_SCREEN* pInitScreen);
 void D4D_Poll(void);
 void D4D_SetOrientation(D4D_ORIENTATION orient);
 void D4D_KeysChanged(D4D_KEYS keys);
@@ -154,10 +154,10 @@ void D4D_FlushOutput(void);
 
 
 /* object API */
-D4D_OBJECT_PTR D4D_GetFocusedObject(D4D_SCREEN* pScreen);
-void D4D_FocusSet(D4D_SCREEN* pScreen, D4D_OBJECT_PTR pObject);
-void D4D_FocusNextObject(D4D_SCREEN* pScreen, D4D_BOOL bInitialSearch);
-void D4D_FocusPrevObject(D4D_SCREEN* pScreen);
+D4D_OBJECT_PTR D4D_GetFocusedObject(const D4D_SCREEN* pScreen);
+void D4D_FocusSet(const D4D_SCREEN* pScreen, D4D_OBJECT_PTR pObject);
+void D4D_FocusNextObject(const D4D_SCREEN* pScreen, D4D_BOOL bInitialSearch);
+void D4D_FocusPrevObject(const D4D_SCREEN* pScreen);
 
 /* Color Schemes */
 D4D_CLR_SCHEME* D4D_ObjectGetScheme(D4D_OBJECT * pObj);
